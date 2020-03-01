@@ -31,4 +31,21 @@ const subscribeToVideoStream = async (req, res, next) => {
   }
 }
 
-module.exports = { subscribeToVideoStream }
+/**
+ *
+ * @param {import('express').Request} req Request
+ * @param {import('express').Response} res Response
+ */
+const unsubscribeFromVideoStream = async (req, res, next) => {
+  try {
+    const sanitizedBody = await videoStreamRequestSchema.validateAsync(req.body)
+    await videoStreamService.unsubscribeFromVideoStream(sanitizedBody)
+    res.status(HTTP_STATUS.NO_CONTENT).json()
+  } catch (error) {
+    next(error)
+  } finally {
+    next()
+  }
+}
+
+module.exports = { subscribeToVideoStream, unsubscribeFromVideoStream }

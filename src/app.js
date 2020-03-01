@@ -10,6 +10,7 @@ app.use(bodyParser.json({ strict: false }))
 
 app.get('/health', (_, res) => res.status(HTTP_STATUS.OK).json({ status: 'OK' }))
 app.post('/video-streams/subscription', videoStreamController.subscribeToVideoStream)
+app.delete('/video-streams/subscription', videoStreamController.unsubscribeFromVideoStream)
 
 app.use(errorHandler)
 

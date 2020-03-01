@@ -27,6 +27,20 @@ paths:
           $ref: '#/responses/400'
         429:
           $ref: '#/responses/429'
+    delete:
+      operationId: stop
+      description: Stop watching a video stream
+      parameters:
+        - $ref: '#/parameters/stopVideoStreamSubscription'
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      responses:
+        200:
+          $ref: '#/responses/200'
+        400:
+          $ref: '#/responses/400'
 parameters:
   subscribeToVideoStream:
     name: subscribeToVideoStream
@@ -46,7 +60,24 @@ parameters:
         videoStreamId:
           type: string
           format: uuid
-
+  stopVideoStreamSubscription:
+    name: stopVideoStreamSubscription
+    in: body
+    description: request to stop subscription to a video stream
+    required: true
+    schema:
+      type: object
+      description: stopVideoStreamSubscription payload
+      required:
+        - userId
+        - videoStreamId
+      properties:
+        userId:
+          type: string
+          format: uuid
+        videoStreamId:
+          type: string
+          format: uuid
 responses:
   200:
     description: Successful request

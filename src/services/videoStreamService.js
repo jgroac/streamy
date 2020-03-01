@@ -22,4 +22,18 @@ const subscribeToVideoStream = async ({ userId, videoStreamId }) => {
   return { userId, videoStreamId }
 }
 
-module.exports = { subscribeToVideoStream }
+/**
+ *
+ * @param {String} userId user UUID
+ * @param {String} videoStreamId UUID
+ */
+const unsubscribeFromVideoStream = async ({ userId, videoStreamId }) => {
+  await db.deleteByKey({
+    userId,
+    videoStreamId,
+  })
+
+  return { userId, videoStreamId }
+}
+
+module.exports = { subscribeToVideoStream, unsubscribeFromVideoStream }
