@@ -13,6 +13,20 @@ class TooManyVideoStreamsError extends Error {
   }
 }
 
+class InputValidationError extends Error {
+  /**
+   * Create InputValidationError
+   * @param {Error} ValidationError
+   */
+  constructor(error) {
+    super(error.message)
+    this.name = this.constructor.name
+    this.status = HTTP_STATUS.BAD_REQUEST
+    Error.captureStackTrace(error)
+  }
+}
+
 module.exports = {
   TooManyVideoStreamsError,
+  InputValidationError,
 }

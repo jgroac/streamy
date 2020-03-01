@@ -1,4 +1,5 @@
-const { TooManyVideoStreamsError } = require('./customErrors')
+const Joi = require('@hapi/joi')
+const { TooManyVideoStreamsError, InputValidationError } = require('./customErrors')
 
 /**
  * Middleware to handle errors
@@ -12,6 +13,14 @@ const errorHandler = (error, req, res, next) => {
     res.status(error.status).json({
       status: error.status,
       error: error.message,
+    })
+  }
+
+  if (error instanceof Joi.ValidationError) {
+    const inputValidationError = new InputValidationError(error)
+    res.status(inputValidationError.status).json({
+      status: inputValidationError.status,
+      error: inputValidationError.message,
     })
   }
 

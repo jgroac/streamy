@@ -1,5 +1,15 @@
+const Joi = require('@hapi/joi')
 const { HTTP_STATUS } = require('../config/constants')
 const videoStreamService = require('../services/videoStreamService')
+
+const videoStreamRequestSchema = Joi.object({
+  userId: Joi.string()
+    .max(36)
+    .required(),
+  videoStreamId: Joi.string()
+    .max(36)
+    .required(),
+})
 
 /**
  *
@@ -7,9 +17,9 @@ const videoStreamService = require('../services/videoStreamService')
  * @param {import('express').Response} res Response
  */
 const subscribeToVideoStream = async (req, res, next) => {
-  const { userId, videoStreamId } = req.body
   try {
-    const data = await videoStreamService.subscribeToVideoStream({ userId, videoStreamId })
+    const sanitizedBody = await videoStreamRequestSchema.validateAsync(req.body)
+    const data = await videoStreamService.subscribeToVideoStream(sanitizedBody)
     res.status(HTTP_STATUS.OK).json({
       status: HTTP_STATUS.OK,
       data,
