@@ -2,9 +2,8 @@ const db = require('../lib/db')
 
 const cleanTable = async () => {
   const { Items } = await db.dangerousScanAll()
-  Items.forEach(item => {
-    db.deleteByKey({ userId: item.userId, videoStreamId: item.videoStreamId })
-  })
+  const deleteItems = Items.map(item => db.deleteByKey({ userId: item.userId, videoStreamId: item.videoStreamId }))
+  await Promise.all(deleteItems)
 }
 
 beforeEach(async () => {
