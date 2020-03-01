@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk')
 const { config } = require('../config')
+const { logger } = require('../lib/logger')
 
 const { IS_OFFLINE, DYNAMODB_TABLE_NAME, DYNAMODB_ENDPOINT, AWS_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } = config
 
@@ -30,7 +31,7 @@ async function put(item) {
     ReturnItemCollectionMetrics: 'SIZE',
   }
 
-  console.log('put data: ', putParams)
+  logger.info('put data: ', putParams)
 
   return dynamoDb.put(putParams).promise()
 }
@@ -44,7 +45,7 @@ async function getByPartitionKey({ partitionKeyName, value }) {
     KeyConditionExpression: `${partitionKeyName} = :value`,
   }
 
-  console.log('get by partition key: ', getByPartitionKeyParams)
+  logger.info('get by partition key: ', getByPartitionKeyParams)
 
   return dynamoDb.query(getByPartitionKeyParams).promise()
 }
@@ -55,7 +56,7 @@ async function deleteByKey(key) {
     Key: key,
   }
 
-  console.log('delete by Key', deleteParams)
+  logger.info('delete by Key', deleteParams)
 
   return dynamoDb.delete(deleteParams).promise()
 }
@@ -65,7 +66,7 @@ async function dangerousScanAll() {
     TableName: DYNAMODB_TABLE_NAME,
   }
 
-  console.log('please do not use this function is only for testing cleansing')
+  logger.info('please do not use this function is only for testing cleansing')
 
   return dynamoDb.scan(scanParams).promise()
 }

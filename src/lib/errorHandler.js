@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi')
+const { logger } = require('../lib/logger')
 const { TooManyVideoStreamsError, InputValidationError, InternalServerError } = require('./customErrors')
 
 /**
@@ -10,6 +11,7 @@ const { TooManyVideoStreamsError, InputValidationError, InternalServerError } = 
  */
 const errorHandler = (error, req, res, next) => {
   if (error instanceof TooManyVideoStreamsError) {
+    logger.info('Too many concurrent video streams', { error })
     return res.status(error.status).json({
       status: error.status,
       error: error.message,
@@ -17,6 +19,7 @@ const errorHandler = (error, req, res, next) => {
   }
 
   if (error instanceof Joi.ValidationError) {
+    logger.info('Invalid values', { error })
     const inputValidationError = new InputValidationError(error)
     return res.status(inputValidationError.status).json({
       status: inputValidationError.status,
@@ -25,6 +28,7 @@ const errorHandler = (error, req, res, next) => {
   }
 
   if (error) {
+    logger.error(error)
     const internalError = new InternalServerError(error)
     return res.status(internalError.status).json({
       status: internalError.status,
