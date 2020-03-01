@@ -1,0 +1,55 @@
+swagger: '2.0'
+info:
+  description: 'This is streamy service.'
+  version: '1.0.0'
+  title: 'Streamy'
+  contact:
+    email: 'jg.roac@gmail.com'
+basePath: '/v1'
+schemes:
+  - 'https'
+  - 'http'
+paths:
+  /video-streams/subscription:
+    post:
+      operationId: start
+      description: Attempt to start watching a video stream
+      parameters:
+        - $ref: '#/parameters/subscribeToVideoStream'
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      responses:
+        200:
+          $ref: '#/responses/200'
+parameters:
+  subscribeToVideoStream:
+    name: subscribeToVideoStream
+    in: body
+    description: request to subscribe to a video stream
+    required: true
+    schema:
+      type: object
+      description: subscribeToVideoStream payload
+      required:
+        - userId
+        - videoStreamId
+      properties:
+        userId:
+          type: string
+          format: uuid
+        videoStreamId:
+          type: string
+          format: uuid
+
+responses:
+  200:
+    description: Successful request
+    schema:
+      type: object
+      properties:
+        videoStreamId:
+          type: string
+        userId:
+          type: string
