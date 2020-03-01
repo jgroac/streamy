@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/dev.js",
-    "test": "jest -i -c jest.config.js",
+    "test": "cross-env IS_OFFLINE=true jest -i -c jest.config.js",
     "test:local": "cross-env IS_OFFLINE=true AWS_DEFAULT_REGION=eu-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy DYNAMODB_TABLE_NAME=video_streams DYNAMODB_ENDPOINT=\"http://localhost:8000\" jest -i -c jest.config.js",
     "format": "prettier --config .prettierrc --write \"**/src/**/*.+(js|json)\"",
     "lint": "eslint ."
