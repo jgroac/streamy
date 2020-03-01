@@ -26,7 +26,21 @@ class InputValidationError extends Error {
   }
 }
 
+class InternalServerError extends Error {
+  /**
+   * Create InputValidationError
+   * @param {Error} ValidationError
+   */
+  constructor(error) {
+    super('Internal Server error')
+    this.name = this.constructor.name
+    this.status = HTTP_STATUS.INTERNAL_SERVER_ERROR
+    Error.captureStackTrace(error)
+  }
+}
+
 module.exports = {
   TooManyVideoStreamsError,
   InputValidationError,
+  InternalServerError,
 }

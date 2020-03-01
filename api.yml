@@ -27,6 +27,8 @@ paths:
           $ref: '#/responses/400'
         429:
           $ref: '#/responses/429'
+        500:
+          $ref: '#/responses/500'
     delete:
       operationId: stop
       description: Stop watching a video stream
@@ -41,6 +43,8 @@ paths:
           $ref: '#/responses/200'
         400:
           $ref: '#/responses/400'
+        500:
+          $ref: '#/responses/500'
 parameters:
   subscribeToVideoStream:
     name: subscribeToVideoStream
@@ -99,6 +103,15 @@ responses:
           type: string
   429:
     description: User has reached the maximum number of concurrent video streams
+    schema:
+      type: object
+      properties:
+        status:
+          type: number
+        error:
+          type: string
+  500:
+    description: Server error
     schema:
       type: object
       properties:
