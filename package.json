@@ -8,7 +8,9 @@
     "test": "cross-env IS_OFFLINE=true jest -i -c jest.config.js",
     "test:local": "cross-env IS_OFFLINE=true AWS_DEFAULT_REGION=eu-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy DYNAMODB_TABLE_NAME=video_streams DYNAMODB_ENDPOINT=\"http://localhost:8000\" jest -i -c jest.config.js",
     "format": "prettier --config .prettierrc --write \"**/src/**/*.+(js|json)\"",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "serverless:local": "cross-env IS_OFFLINE=true AWS_DEFAULT_REGION=localhost AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy DYNAMODB_TABLE_NAME=video_streams DYNAMODB_ENDPOINT=\"http://localhost:8000\" sls offline start",
+    "serverless:deploy": "cross-env AWS_DEFAULT_REGION=eu-west-2 DYNAMODB_TABLE_NAME=video_streams sls deploy"
   },
   "author": "Jose Roa",
   "license": "ISC",
@@ -22,6 +24,8 @@
     "jest": "^25.1.0",
     "jest-in-case": "^1.0.2",
     "prettier": "^1.19.1",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-offline": "^5.12.1",
     "supertest": "^4.0.2"
   },
   "dependencies": {
@@ -29,6 +33,7 @@
     "aws-sdk": "^2.630.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "serverless-http": "^2.3.2"
   }
 }
