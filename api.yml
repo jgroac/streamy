@@ -23,6 +23,8 @@ paths:
       responses:
         200:
           $ref: '#/responses/200'
+        429:
+          $ref: '#/responses/429'
 parameters:
   subscribeToVideoStream:
     name: subscribeToVideoStream
@@ -52,4 +54,13 @@ responses:
         videoStreamId:
           type: string
         userId:
+          type: string
+  429:
+    description: User has reached the maximum number of concurrent video streams
+    schema:
+      type: object
+      properties:
+        status:
+          type: number
+        error:
           type: string
