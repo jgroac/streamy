@@ -35,6 +35,44 @@ async function put(item) {
   return dynamoDb.put(putParams).promise()
 }
 
+async function getByPartitionKey({ partitionKeyName, value }) {
+  const getByPartitionKeyParams = {
+    TableName: DYNAMODB_TABLE_NAME,
+    ExpressionAttributeValues: {
+      ':value': value,
+    },
+    KeyConditionExpression: `${partitionKeyName} = :value`,
+  }
+
+  console.log('get by partition key: ', getByPartitionKeyParams)
+
+  return dynamoDb.query(getByPartitionKeyParams).promise()
+}
+
+async function deleteByKey(key) {
+  const deleteParams = {
+    TableName: DYNAMODB_TABLE_NAME,
+    Key: key,
+  }
+
+  console.log('delete by Key', deleteParams)
+
+  return dynamoDb.delete(deleteParams).promise()
+}
+
+async function dangerousScanAll() {
+  const scanParams = {
+    TableName: DYNAMODB_TABLE_NAME,
+  }
+
+  console.log('please do not use this function is only for testing cleansing')
+
+  return dynamoDb.scan(scanParams).promise()
+}
+
 module.exports = {
   put,
+  deleteByKey,
+  getByPartitionKey,
+  dangerousScanAll,
 }
