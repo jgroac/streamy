@@ -1,4 +1,5 @@
 const request = require('supertest')
+const { HTTP_STATUS } = require('../../config/constants')
 const app = require('../../app')
 
 describe('healthCheck', () => {
@@ -7,7 +8,7 @@ describe('healthCheck', () => {
       const response = await request(app)
         .get('/health')
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(HTTP_STATUS.OK)
 
       expect(response.body).toEqual({
         status: 'OK',
